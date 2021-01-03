@@ -8,5 +8,5 @@ install:
   - pip install flask_restful
 # command to run tests
 script:
-  - pylint *.py
-  
+  - pylint ml/*.py
+  - pylint backend/*.py
