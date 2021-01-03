@@ -1,7 +1,10 @@
+"""
+The flask backend main file
+"""
+import os
 from flask import Flask, request
 from werkzeug import secure_filename
 from flask_cors import CORS
-import os
 
 app = Flask(__name__)
 
@@ -11,12 +14,15 @@ cors = CORS()
 cors.init_app(app, resource={r"/api/*": {"origins": "*"}})
 
 @app.route('/upload', methods=['POST'])
-def upload():  
+def upload():
+    """
+    Upload the file from AJAX request
+    """
     for fname in request.files:
-        f = request.files.get(fname)
-        print(f)
+        f_uploaded = request.files.get(fname)
+        print(f_uploaded)
         app.logger.info('Helloa!')
-        f.save('./uploads/%s' % secure_filename(fname))
+        f_uploaded.save('./uploads/%s' % secure_filename(fname))
 
     return 'Okay!'
 
