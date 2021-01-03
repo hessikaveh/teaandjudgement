@@ -259,6 +259,7 @@ if __name__ == "__main__":
 
 
 
+
     """
     image = Image.fromarray(img_array)
     print(image.format)
