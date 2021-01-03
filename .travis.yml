@@ -1,0 +1,11 @@
+language: python
+python: 
+  - "3.8"
+# command to install dependencies
+install:
+  - pip install pylint
+  - pip install flask
+  - pip install flask_restful
+# command to run tests
+script 
+  - pylint *.py
