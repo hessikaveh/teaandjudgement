@@ -17,6 +17,19 @@
           Field hint
         </template>
       </q-file>
+
+      <q-card dark bordered class="bg-grey-9 my-card">
+      <q-card-section>
+        <div class="text-h6">Your Roast Text</div>
+      </q-card-section>
+
+      <q-separator dark inset />
+
+      <q-card-section>
+        {{ category }}
+      </q-card-section>
+    </q-card>
+
   </q-page>
 </template>
 
@@ -26,6 +39,7 @@ import axios from 'axios'
 export default {
   data () {
     return {
+      category: '',
       imageUpload: [],
       url: null
     }
@@ -45,8 +59,10 @@ export default {
             'Content-Type': 'multipart/form-data'
           }
         }
-      ).then(function () {
-        console.log('SUCCESS!!')
+      ).then(response => {
+        console.log(response)
+        const cat = response.data
+        this.category = cat
       })
         .catch(function () {
           console.log('FAILURE!!')
