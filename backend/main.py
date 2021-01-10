@@ -2,16 +2,12 @@
 The flask backend main file
 """
 import os
-from io import BytesIO
-import requests
+import pickle
 from flask import Flask, request
 from werkzeug.utils import secure_filename
 from flask_cors import CORS
-from sklearn.cluster import KMeans
-import pickle
 from PIL import Image
 from keras.preprocessing.image import img_to_array
-import numpy as np
 
 app = Flask(__name__)
 
@@ -29,7 +25,6 @@ def upload():
     for fname in request.files:
         f_uploaded = request.files.get(fname)
         print(f_uploaded)
-        app.logger.info('Helloa!')
         f_uploaded.save('./uploads/%s' % secure_filename(fname))
 
         img_array = (Image.open(f_uploaded).convert('L')).resize((400, 400))
