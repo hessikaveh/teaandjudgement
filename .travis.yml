@@ -6,6 +6,12 @@ install:
   - pip install pylint
   - pip install flask
   - pip install flask_restful
+  - pip install pandas
+  - pip install pillow
+  - pip install scikit-learn
+  - pip install matplotlib
+  - pip install requests
+  - pip install keras
 # command to run tests
 script:
   - pylint ml/*.py
