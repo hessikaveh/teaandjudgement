@@ -15,5 +15,5 @@ install:
   - pip install keras
 # command to run tests
 script:
-  - pylint --rcfile=.pylintrc ml/*.py
-  - pylint --rcfile=.pylintrc backend/*.py
+  - pylint --rcfile=.pylintrc ml/train.py
+  - pylint --rcfile=.pylintrc backend/main.py
