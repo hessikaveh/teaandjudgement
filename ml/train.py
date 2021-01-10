@@ -93,9 +93,7 @@ if __name__ == "__main__":
     plt.savefig('foo.png')
 
     # reshape centroids into images
-    images = x_train.reshape(956,
-                             400,
-                             400)
+    images = x_train.reshape((956, 400, 400))
     images *= 255
     images = images.astype(np.uint8)
 
