@@ -12,6 +12,9 @@ from sklearn.cluster import MiniBatchKMeans
 import matplotlib.pyplot as plt
 
 def input_processing(url):
+    """
+    Function to download and process the image input
+    """
     try:
         response = requests.get(url)
         img_array = (Image.open(BytesIO(response.content)).convert('L')).resize((400, 400))
@@ -26,6 +29,9 @@ def input_processing(url):
 
 
 def add_img_array(data):
+    """
+    Function to add the array to the pandas dataframe
+    """
     data['img_array'] = data['url'].map(input_processing)
     data.to_hdf('reddit_img.h5', key='data')
 
@@ -87,7 +93,9 @@ if __name__ == "__main__":
     plt.savefig('foo.png')
 
     # reshape centroids into images
-    images = x_train.reshape(956, 400, 400)
+    images = x_train.reshape(956,
+                             400,
+                             400)
     images *= 255
     images = images.astype(np.uint8)
 
@@ -118,4 +126,4 @@ if __name__ == "__main__":
     pickle.dump(kmeans, open("save.pkl", "wb"))
     topics_data['cat'] = pd.Series(means.astype(int), index=topics_data.index)
     print(topics_data)
-    topics_data.to_hdf('reddit_img_labeled.h5', key='data')
+    topics_data.to_csv('reddit_img_labeled.csv')
