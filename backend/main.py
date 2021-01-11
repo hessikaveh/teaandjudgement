@@ -8,6 +8,7 @@ from werkzeug.utils import secure_filename
 from flask_cors import CORS
 from PIL import Image
 from keras.preprocessing.image import img_to_array
+import pandas as pd
 
 app = Flask(__name__)
 
@@ -34,9 +35,16 @@ def upload():
         kmeans = pickle.load(open("../ml/save.pkl", "rb"))
         pred = kmeans.predict(img_array)
         pred = int(pred.mean())
+        topics_data = pd.read_csv('../ml/reddit_img_labeled.csv')
+        topics_data = topics_data[topics_data['cat'] == pred]
+        roast = topics_data['roast'].sample(1)
+        roast = roast.to_numpy()
+        roast = roast[0]
 
 
-    return str(pred)
+
+
+    return str(roast)
 
 if __name__ == '__main__':
     if not os.path.exists('./uploads'):

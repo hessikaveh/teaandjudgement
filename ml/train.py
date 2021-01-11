@@ -93,7 +93,7 @@ if __name__ == "__main__":
     plt.savefig('foo.png')
 
     # reshape centroids into images
-    images = x_train.reshape((956, 400, 400))
+    images = x_train.reshape((961, 400, 400))
     images *= 255
     images = images.astype(np.uint8)
 
@@ -115,7 +115,7 @@ if __name__ == "__main__":
     y_pred_kmeans = kmeans.predict(x_train)
     print(y_pred_kmeans)
     print(y_pred_kmeans.shape)
-    final_image = y_pred_kmeans.reshape(956, 20, 20)
+    final_image = y_pred_kmeans.reshape(961, 20, 20)
     means = final_image.mean(axis=1)
     print(final_image)
     print(kmeans.labels_)
