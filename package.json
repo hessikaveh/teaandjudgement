@@ -8,7 +8,7 @@
   "scripts": {
     "lint": "eslint --ext .js,.vue ./",
     "test": "echo \"No test specified\" && exit 0",
-    "build": "yarn build",
+    "build": "cd web/quasar-teaandjudgment && yarn build",
     "start": "node server.js",
     "heroku-postbuild": "yarn && yarn build"
   },
