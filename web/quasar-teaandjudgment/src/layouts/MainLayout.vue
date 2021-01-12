@@ -51,22 +51,10 @@ import EssentialLink from 'components/EssentialLink.vue'
 
 const linksData = [
   {
-    title: 'Docs',
-    caption: 'quasar.dev',
-    icon: 'school',
-    link: 'https://quasar.dev'
-  },
-  {
     title: 'Github',
-    caption: 'github.com/quasarframework',
+    caption: 'github.com/TeaandJudgement',
     icon: 'code',
-    link: 'https://github.com/quasarframework'
-  },
-  {
-    title: 'Discord Chat Channel',
-    caption: 'chat.quasar.dev',
-    icon: 'chat',
-    link: 'https://chat.quasar.dev'
+    link: 'https://github.com/hessikaveh/teaandjudgement'
   }
 ]
 

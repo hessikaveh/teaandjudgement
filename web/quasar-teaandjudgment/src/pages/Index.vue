@@ -1,5 +1,14 @@
 <template>
   <q-page class="flex flex-center">
+        <q-card
+      class="my-card text-white"
+      style="background: radial-gradient(circle, #35a2ff 0%, #014a88 100%)"
+    >
+      <q-card-section class="q-pt-none">
+        Upload a photo and enjoy a roast text extracted from reddit, also the selection is using an unsupervised machine learning algorithm in the background
+      </q-card-section>
+    </q-card>
+
     <q-img
           :src="url"
           :ratio="1"
