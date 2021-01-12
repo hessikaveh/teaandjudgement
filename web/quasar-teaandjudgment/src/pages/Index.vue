@@ -53,7 +53,7 @@ export default {
       console.log('>> formData >> ', formData)
 
       // You should have a server side REST API
-      axios.post('http://127.0.0.1:5000/upload',
+      axios.post('https://teaandjudgement.herokuapp.com/upload',
         formData, {
           headers: {
             'Content-Type': 'multipart/form-data'
