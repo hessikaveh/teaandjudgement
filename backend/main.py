@@ -49,8 +49,8 @@ def upload():
 if __name__ == '__main__':
     import argparse
     parser = argparse.ArgumentParser(description='Flask backend!')
-    parser.add_argument('--host', host='0.0.0.0')
-    parser.add_argument('--port', port=5000)
+    parser.add_argument('--host')
+    parser.add_argument('--port')
     args = parser.parse_args()
     if not os.path.exists('./uploads'):
         os.mkdir('./uploads')
