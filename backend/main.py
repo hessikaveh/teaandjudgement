@@ -32,10 +32,10 @@ def upload():
         img_array = np.array(img_array)
         img_array = img_array/255.
         img_array = img_array.reshape(len(img_array), -1)
-        kmeans = pickle.load(open("../ml/save.pkl", "rb"))
+        kmeans = pickle.load(open("ml/save.pkl", "rb"))
         pred = kmeans.predict(img_array)
         pred = int(pred.mean())
-        topics_data = pd.read_csv('../ml/reddit_img_labeled.csv')
+        topics_data = pd.read_csv('ml/reddit_img_labeled.csv')
         topics_data = topics_data[topics_data['cat'] == pred]
         roast = topics_data['roast'].sample(1)
         roast = roast.to_numpy()
