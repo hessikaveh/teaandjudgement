@@ -10,7 +10,6 @@
     "test": "echo \"No test specified\" && exit 0",
     "build": "cd web/quasar-teaandjudgment && yarn build",
     "start": "node server.js",
-    "heroku-postbuild": "yarn && yarn build"
   },
   "dependencies": {
     "@quasar/extras": "^1.0.0",
