@@ -3,11 +3,11 @@ The flask backend main file
 """
 import os
 import pickle
+import numpy as np
 from flask import Flask, request
 from werkzeug.utils import secure_filename
 from flask_cors import CORS
 from PIL import Image
-from keras.preprocessing.image import img_to_array
 import pandas as pd
 
 app = Flask(__name__)
@@ -29,7 +29,7 @@ def upload():
         f_uploaded.save('./uploads/%s' % secure_filename(fname))
 
         img_array = (Image.open(f_uploaded).convert('L')).resize((400, 400))
-        img_array = img_to_array(img_array)
+        img_array = np.array(img_array)
         img_array = img_array/255.
         img_array = img_array.reshape(len(img_array), -1)
         kmeans = pickle.load(open("../ml/save.pkl", "rb"))

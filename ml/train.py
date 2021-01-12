@@ -7,7 +7,6 @@ import pandas as pd
 import numpy as np
 from PIL import Image
 import requests
-from keras.preprocessing.image import img_to_array
 from sklearn.cluster import MiniBatchKMeans
 import matplotlib.pyplot as plt
 
@@ -18,12 +17,12 @@ def input_processing(url):
     try:
         response = requests.get(url)
         img_array = (Image.open(BytesIO(response.content)).convert('L')).resize((400, 400))
-        img_array = img_to_array(img_array)
+        img_array = np.array(img_array)
     except Exception as exception_type:
         print(exception_type)
         empty_img = Image.new('L', (400, 400))
         img_array = empty_img.resize((400, 400))
-        img_array = img_to_array(img_array)
+        img_array = np.array(img_array)
 
     return img_array
 

@@ -6,4 +6,3 @@ pillow
 scikit-learn
 matplotlib
 requests
-keras
