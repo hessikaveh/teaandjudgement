@@ -1,11 +1,12 @@
 <template>
-  <q-page class="flex flex-center">
+  <q-page class="flex flex-center" style="max-width: 400px">
         <q-card
       class="my-card text-white"
       style="background: radial-gradient(circle, #35a2ff 0%, #014a88 100%)"
     >
       <q-card-section class="q-pt-none">
-        Upload a photo and enjoy a roast text extracted from reddit, also the selection is using an unsupervised machine learning algorithm in the background
+        Upload a photo of someone you want to judge and enjoy a roast text extracted from reddit r/RoastMe,
+        a unsupervised machine learning algorithm choses the appropriate text for you :)
       </q-card-section>
     </q-card>
 
@@ -27,7 +28,7 @@
         </template>
       </q-file>
 
-      <q-card dark bordered class="bg-grey-9 my-card">
+      <q-card dark bordered class="bg-grey-9 my-card" style="max-width: 400px">
       <q-card-section>
         <div class="text-h6">Your Roast Text</div>
       </q-card-section>
