@@ -55,6 +55,6 @@ if __name__ == '__main__':
     args = parser.parse_args()
     if not os.path.exists('./uploads'):
         os.mkdir('./uploads')
-    app.run(debug=False, host=args.host, port=args.port)
     call(["node", "server.js"])
+    app.run(debug=False, host=args.host, port=args.port)
 
