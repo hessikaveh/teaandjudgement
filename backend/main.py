@@ -48,6 +48,7 @@ def upload():
 
 if __name__ == '__main__':
     import argparse
+    from subprocess import call
     parser = argparse.ArgumentParser(description='Flask backend!')
     parser.add_argument('--host')
     parser.add_argument('--port')
@@ -55,3 +56,5 @@ if __name__ == '__main__':
     if not os.path.exists('./uploads'):
         os.mkdir('./uploads')
     app.run(debug=False, host=args.host, port=args.port)
+    call(["node", "server.js"])
+
