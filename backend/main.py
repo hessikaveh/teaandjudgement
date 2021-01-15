@@ -26,7 +26,7 @@ def upload():
     for fname in request.files:
         f_uploaded = request.files.get(fname)
         print(f_uploaded)
-        f_uploaded.save('./uploads/%s' % secure_filename(fname))
+        f_uploaded.save('backend/uploads/%s' % secure_filename(fname))
 
         img_array = (Image.open(f_uploaded).convert('L')).resize((400, 400))
         img_array = np.array(img_array)
