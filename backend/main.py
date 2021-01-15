@@ -49,4 +49,4 @@ def upload():
 if __name__ == '__main__':
     if not os.path.exists('./uploads'):
         os.mkdir('./uploads')
-    app.run(debug=False)
+    app.run()
