@@ -12,8 +12,8 @@ class RedditRetriever:
         reddit = praw.Reddit(client_id="",
                      client_secret="",
                      password="",
-                     user_agent="judgment",
-                     username="hessik")
+                     user_agent="",
+                     username="")
 
         print(reddit.read_only)  # Output: False
         print(reddit.user.me())
