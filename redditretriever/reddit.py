@@ -9,9 +9,9 @@ class RedditRetriever:
     A class to retrieve and store information in a desired format from reddit
     """
     def __init__(self):
-        reddit = praw.Reddit(client_id="mksdHm2HohQ4qA",
-                     client_secret="mPMHD0JUTzlOZL--FhdNTXNdu5ZOWw",
-                     password="0960684688",
+        reddit = praw.Reddit(client_id="",
+                     client_secret="",
+                     password="",
                      user_agent="judgment",
                      username="hessik")
 
