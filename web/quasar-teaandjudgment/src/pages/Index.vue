@@ -1,6 +1,13 @@
 <template>
   <q-page class="flex flex-center" style="max-width: 400px">
-        <q-card
+    <q-ajax-bar ref="bar" :position="position" :reverse="reverse" :size="computedSize" />
+    <q-card style="margin-top: 25px">
+        <q-card-title class="bg-primary text-center">
+          <q-btn push color="orange" @click="trigger()">Trigger Event</q-btn>
+        </q-card-title>
+    </q-card>
+    
+    <q-card
       class="my-card text-white"
       style="background: radial-gradient(circle, #35a2ff 0%, #014a88 100%)"
     >
@@ -15,7 +22,7 @@
           :ratio="1"
           width="30%"
     />
-    <q-file filled bottom-slots v-model="imageUpload" accept="image/*" @input="onFileChange" label="Upload image" style="max-width: 400px" counter>
+    <q-file filled bottom-slots v-model="imageUpload" accept="image/*" @input="onFileChange" @click="trigger()" label="Upload image" style="max-width: 400px" counter>
         <template v-slot:prepend>
           <q-icon name="cloud_upload" @click.stop />
         </template>
@@ -51,7 +58,16 @@ export default {
     return {
       category: '',
       imageUpload: [],
-      url: null
+      url: null,
+      position: 'bottom',
+      reverse: false,
+      size: 4,
+      timeouts: []
+    }
+  },
+  computed: {
+    computedSize () {
+      return this.size + 'px'
     }
   },
   methods: {
@@ -61,6 +77,8 @@ export default {
       const formData = new FormData()
       formData.append('file.jpg', file)
       console.log('>> formData >> ', formData)
+
+
 
       // You should have a server side REST API
       axios.post('https://teaandjudgement.herokuapp.com/upload',
@@ -77,6 +95,14 @@ export default {
         .catch(function () {
           console.log('FAILURE!!')
         })
+    },
+    trigger () {
+      this.$refs.bar.start()
+      setTimeout(() => {
+        if (this.$refs.bar) {
+          this.$refs.bar.stop()
+        }
+      }, Math.random() * 5000 + 2000)
     }
 
   }
