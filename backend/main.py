@@ -9,6 +9,8 @@ from werkzeug.utils import secure_filename
 from flask_cors import CORS
 from PIL import Image
 import pandas as pd
+from tensorflow.keras.preprocessing import image
+from tensorflow.keras.applications import vgg16
 
 app = Flask(__name__)
 
@@ -16,6 +18,14 @@ app = Flask(__name__)
 # to send the file
 cors = CORS()
 cors.init_app(app, resource={r"/api/*": {"origins": "*"}})
+
+def apply_vgg(img):
+    x_img = np.expand_dims(img, axis=0)
+    x_img = vgg16.preprocess_input(x_img)
+    # Run the image through the deep neural network to make a prediction
+    predictions = model.predict(x_img)
+
+    return predictions
 
 @app.route('/upload', methods=['POST'])
 def upload():
@@ -27,15 +37,13 @@ def upload():
         f_uploaded = request.files.get(fname)
         print(f_uploaded)
         f_uploaded.save('backend/uploads/%s' % secure_filename(fname))
+        img = image.load_img(f_uploaded, target_size=(224, 224))
+        img_array = image.img_to_array(img)
+        preds = apply_vgg(img_array)
 
-        img_array = (Image.open(f_uploaded).convert('L')).resize((400, 400))
-        img_array = np.array(img_array)
-        img_array = img_array/255.
-        img_array = img_array.reshape(len(img_array), -1)
-        kmeans = pickle.load(open("ml/save.pkl", "rb"))
-        pred = kmeans.predict(img_array)
-        pred = int(pred.mean())
-        topics_data = pd.read_csv('ml/reddit_img_labeled.csv')
+        kmeans = pickle.load(open("ml/save_tl.pkl", "rb"))
+        pred = kmeans.predict(preds)
+        topics_data = pd.read_csv('ml/reddit_img_labeled_tl.csv')
         topics_data = topics_data[topics_data['cat'] == pred]
         roast = topics_data['roast'].sample(1)
         roast = roast.to_numpy()
