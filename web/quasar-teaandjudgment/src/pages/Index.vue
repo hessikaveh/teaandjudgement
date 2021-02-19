@@ -1,12 +1,6 @@
 <template>
   <q-page class="flex flex-center" style="max-width: 400px">
     <q-ajax-bar ref="bar" :position="position" :reverse="reverse" :size="computedSize" />
-    <q-card style="margin-top: 25px">
-        <q-card-title class="bg-primary text-center">
-          <q-btn push color="orange" @click="trigger()">Trigger Event</q-btn>
-        </q-card-title>
-    </q-card>
-    
     <q-card
       class="my-card text-white"
       style="background: radial-gradient(circle, #35a2ff 0%, #014a88 100%)"
@@ -77,8 +71,6 @@ export default {
       const formData = new FormData()
       formData.append('file.jpg', file)
       console.log('>> formData >> ', formData)
-
-
 
       // You should have a server side REST API
       axios.post('https://teaandjudgement.herokuapp.com/upload',
