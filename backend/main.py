@@ -7,10 +7,9 @@ import numpy as np
 from flask import Flask, request
 from werkzeug.utils import secure_filename
 from flask_cors import CORS
-from PIL import Image
 import pandas as pd
-from tensorflow.keras.preprocessing import image
-from tensorflow.keras.applications import vgg16
+from keras.preprocessing import image
+from keras.applications import vgg16
 
 app = Flask(__name__)
 
@@ -19,6 +18,7 @@ app = Flask(__name__)
 cors = CORS()
 cors.init_app(app, resource={r"/api/*": {"origins": "*"}})
 
+model = vgg16.VGG16()
 def apply_vgg(img):
     x_img = np.expand_dims(img, axis=0)
     x_img = vgg16.preprocess_input(x_img)

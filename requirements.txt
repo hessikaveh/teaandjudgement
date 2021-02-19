@@ -1,5 +1,4 @@
 gunicorn
-tensorflow
 keras
 flask
 flask_restful
