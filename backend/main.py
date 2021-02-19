@@ -18,7 +18,7 @@ app = Flask(__name__)
 cors = CORS()
 cors.init_app(app, resource={r"/api/*": {"origins": "*"}})
 
-model = vgg16.VGG16()
+model = vgg16.VGG16(include_top=False, weights="imagenet")
 def apply_vgg(img):
     x_img = np.expand_dims(img, axis=0)
     x_img = vgg16.preprocess_input(x_img)
