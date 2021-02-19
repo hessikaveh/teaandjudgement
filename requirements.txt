@@ -5,5 +5,4 @@ flask
 flask_restful
 flask_cors
 pandas
-scikit-learn
 requests
