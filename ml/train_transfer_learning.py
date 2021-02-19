@@ -18,13 +18,13 @@ def input_processing(url):
     """
     try:
         response = requests.get(url)
-        img = image.load_img(BytesIO(response.content), target_size=(224, 224))
+        img = image.load_img(BytesIO(response.content), target_size=(64, 64))
         img_array = image.img_to_array(img)
         #plt.imshow(img)
         #plt.show()
     except Exception as exception_type:
         print(exception_type)
-        img = image.load_img("empty.png", target_size=(224, 224))
+        img = image.load_img("empty.png", target_size=(64, 64))
         img_array = image.img_to_array(img)
 
     return img_array
@@ -37,7 +37,7 @@ def add_img_array(data):
     data['predictions'] = data['img_array'].apply(apply_vgg)
     data.to_hdf('reddit_img_tl.h5', key='data')
 
-model = vgg16.VGG16()
+model = vgg16.VGG16(include_top=False, weights="imagenet")
 def apply_vgg(img):
     x = np.expand_dims(img, axis=0)
     x = vgg16.preprocess_input(x)
