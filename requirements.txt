@@ -1,5 +1,5 @@
 gunicorn
-tensorflow
+tensorflow==2.0.0
 keras
 flask
 flask_restful

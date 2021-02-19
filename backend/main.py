@@ -8,8 +8,8 @@ from flask import Flask, request
 from werkzeug.utils import secure_filename
 from flask_cors import CORS
 import pandas as pd
-from keras.preprocessing import image
-from keras.applications import vgg16
+from tensorflow.keras.preprocessing import image
+from tensorflow.keras.applications import vgg16
 
 app = Flask(__name__)
 
