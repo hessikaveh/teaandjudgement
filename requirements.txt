@@ -1,10 +1,9 @@
 gunicorn
+tensorflow
 keras
 flask
 flask_restful
 flask_cors
 pandas
-pillow
 scikit-learn
-matplotlib
 requests
