@@ -7,3 +7,4 @@ flask_cors
 pandas
 requests
 pillow
+scikit-learn
