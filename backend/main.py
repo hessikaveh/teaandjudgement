@@ -2,6 +2,7 @@
 The flask backend main file
 """
 import os
+from io import BytesIO
 import pickle
 import numpy as np
 from flask import Flask, request
@@ -37,7 +38,7 @@ def upload():
         f_uploaded = request.files.get(fname)
         print(f_uploaded)
         f_uploaded.save('backend/uploads/%s' % secure_filename(fname))
-        img = image.load_img(f_uploaded, target_size=(48, 48))
+        img = image.load_img(BytesIO(f_uploaded), target_size=(48, 48))
         img_array = image.img_to_array(img)
         preds = apply_vgg(img_array)
 
