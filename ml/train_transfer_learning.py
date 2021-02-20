@@ -18,13 +18,13 @@ def input_processing(url):
     """
     try:
         response = requests.get(url)
-        img = image.load_img(BytesIO(response.content), target_size=(64, 64))
+        img = image.load_img(BytesIO(response.content), target_size=(48, 48))
         img_array = image.img_to_array(img)
         #plt.imshow(img)
         #plt.show()
     except Exception as exception_type:
         print(exception_type)
-        img = image.load_img("empty.png", target_size=(64, 64))
+        img = image.load_img("empty.png", target_size=(48, 48))
         img_array = image.img_to_array(img)
 
     return img_array
@@ -37,7 +37,7 @@ def add_img_array(data):
     data['predictions'] = data['img_array'].apply(apply_vgg)
     data.to_hdf('reddit_img_tl.h5', key='data')
 
-model = vgg16.VGG16(include_top=False, weights="imagenet", input_shape=(64, 64, 3))
+model = vgg16.VGG16(include_top=False, weights="imagenet", input_shape=(48, 48, 3))
 def apply_vgg(img):
     x = np.expand_dims(img, axis=0)
     x = vgg16.preprocess_input(x)
@@ -77,7 +77,7 @@ if __name__ == "__main__":
     # record centroid values
     centroids = kmeans.cluster_centers_
     print(centroids)
-    images = centroids.reshape(100, 2, 2, 512)
+    images = centroids.reshape(100, 1, 1, 512)
     """for predictions in images:
         # Look up the names of the predicted classes. Index zero is the results for the first image.
         predicted_classes = vgg16.decode_predictions(predictions)
