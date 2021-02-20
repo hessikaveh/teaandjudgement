@@ -37,7 +37,7 @@ def add_img_array(data):
     data['predictions'] = data['img_array'].apply(apply_vgg)
     data.to_hdf('reddit_img_tl.h5', key='data')
 
-model = vgg16.VGG16(include_top=False, weights="imagenet")
+model = vgg16.VGG16(include_top=False, weights="imagenet", input_shape=(64, 64, 3))
 def apply_vgg(img):
     x = np.expand_dims(img, axis=0)
     x = vgg16.preprocess_input(x)
@@ -77,8 +77,8 @@ if __name__ == "__main__":
     # record centroid values
     centroids = kmeans.cluster_centers_
     print(centroids)
-    images = centroids.reshape(100, 1, 1000)
-    for predictions in images:
+    images = centroids.reshape(100, 2, 2, 512)
+    """for predictions in images:
         # Look up the names of the predicted classes. Index zero is the results for the first image.
         predicted_classes = vgg16.decode_predictions(predictions)
 
@@ -86,6 +86,7 @@ if __name__ == "__main__":
 
         for imagenet_id, name, likelihood in predicted_classes[0]:
             print("Prediction: {} - {:2f}".format(name, likelihood))
+    """
     #kmeans = KMeans(n_clusters=n_clusters, n_init=20, n_jobs=4)
     y_pred_kmeans = kmeans.predict(x_train)
     print(y_pred_kmeans)
