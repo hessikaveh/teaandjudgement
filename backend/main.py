@@ -2,7 +2,6 @@
 The flask backend main file
 """
 import os
-from io import BytesIO
 import pickle
 import numpy as np
 from flask import Flask, request
@@ -19,7 +18,7 @@ app = Flask(__name__)
 cors = CORS()
 cors.init_app(app, resource={r"/api/*": {"origins": "*"}})
 
-model = vgg16.VGG16(include_top=False, weights="imagenet", input_shape=(64, 64, 3))
+model = vgg16.VGG16(include_top=False, weights="imagenet", input_shape=(48, 48, 3))
 def apply_vgg(img):
     x_img = np.expand_dims(img, axis=0)
     x_img = vgg16.preprocess_input(x_img)
@@ -36,12 +35,14 @@ def upload():
     pred = 0
     for fname in request.files:
         f_uploaded = request.files.get(fname)
-        print(f_uploaded)
         f_uploaded.save('backend/uploads/%s' % secure_filename(fname))
-        img = image.load_img(open(f_uploaded), target_size=(48, 48))
+        img = image.load_img('backend/uploads/%s' % secure_filename(fname), target_size=(48, 48))
         img_array = image.img_to_array(img)
         preds = apply_vgg(img_array)
-
+        preds = preds.reshape(len(preds), -1)
+        zero = np.zeros((960, 512), dtype=np.float32)
+        preds = np.concatenate((preds, zero))
+        preds = np.array(preds, dtype=np.float32)
         kmeans = pickle.load(open("ml/save_tl.pkl", "rb"))
         pred = kmeans.predict(preds)
         topics_data = pd.read_csv('ml/reddit_img_labeled_tl.csv')
@@ -58,4 +59,4 @@ def upload():
 if __name__ == '__main__':
     if not os.path.exists('./uploads'):
         os.mkdir('./uploads')
-    app.run()
+    app.run(debug=True)

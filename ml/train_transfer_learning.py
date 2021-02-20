@@ -62,7 +62,7 @@ if __name__ == "__main__":
     print(x_train[0].shape)
     print(x_train.shape)
     x_train = np.concatenate(x_train)
-    #print(x_train)
+    print(x_train.dtype)
     #print(len(x_train))
     #print(np.prod(x_train.shape[1:]))
     x_train = x_train.reshape(len(x_train), -1)
@@ -76,7 +76,8 @@ if __name__ == "__main__":
 
     # record centroid values
     centroids = kmeans.cluster_centers_
-    print(centroids)
+    print("centeroid shape")
+    print(centroids.shape)
     images = centroids.reshape(100, 1, 1, 512)
     """for predictions in images:
         # Look up the names of the predicted classes. Index zero is the results for the first image.
