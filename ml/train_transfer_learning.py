@@ -3,14 +3,13 @@ Image recognition and categorization module using
 transfer learning and unsupervised learning methods
 """
 from io import BytesIO
+import pickle
 import requests
 import pandas as pd
 import numpy as np
 from tensorflow.keras.preprocessing import image
 from tensorflow.keras.applications import vgg16
-import matplotlib.pyplot as plt
 from sklearn.cluster import MiniBatchKMeans
-import pickle
 
 def input_processing(url):
     """
@@ -20,8 +19,6 @@ def input_processing(url):
         response = requests.get(url)
         img = image.load_img(BytesIO(response.content), target_size=(48, 48))
         img_array = image.img_to_array(img)
-        #plt.imshow(img)
-        #plt.show()
     except Exception as exception_type:
         print(exception_type)
         img = image.load_img("empty.png", target_size=(48, 48))
@@ -39,10 +36,13 @@ def add_img_array(data):
 
 model = vgg16.VGG16(include_top=False, weights="imagenet", input_shape=(48, 48, 3))
 def apply_vgg(img):
-    x = np.expand_dims(img, axis=0)
-    x = vgg16.preprocess_input(x)
+    """
+    Function to add the array to the pandas dataframe
+    """
+    x_img = np.expand_dims(img, axis=0)
+    x_img = vgg16.preprocess_input(x_img)
     # Run the image through the deep neural network to make a prediction
-    predictions = model.predict(x)
+    predictions = model.predict(x_img)
 
     return predictions
 
@@ -58,17 +58,8 @@ if __name__ == "__main__":
 
     preds = topics_data['predictions']
     x_train = preds.values
-    print(x_train[0])
-    print(x_train[0].shape)
-    print(x_train.shape)
     x_train = np.concatenate(x_train)
-    print(x_train.dtype)
-    #print(len(x_train))
-    #print(np.prod(x_train.shape[1:]))
     x_train = x_train.reshape(len(x_train), -1)
-
-    #print(x_train.shape)
-
 
     # Initialize and fit KMeans algorithm
     kmeans = MiniBatchKMeans(n_clusters=100)
@@ -76,25 +67,9 @@ if __name__ == "__main__":
 
     # record centroid values
     centroids = kmeans.cluster_centers_
-    print("centeroid shape")
-    print(centroids.shape)
+
     images = centroids.reshape(100, 1, 1, 512)
-    """for predictions in images:
-        # Look up the names of the predicted classes. Index zero is the results for the first image.
-        predicted_classes = vgg16.decode_predictions(predictions)
-
-        print("Top predictions for this image:")
-
-        for imagenet_id, name, likelihood in predicted_classes[0]:
-            print("Prediction: {} - {:2f}".format(name, likelihood))
-    """
-    #kmeans = KMeans(n_clusters=n_clusters, n_init=20, n_jobs=4)
     y_pred_kmeans = kmeans.predict(x_train)
-    print(y_pred_kmeans)
-    print(y_pred_kmeans.shape)
-
     pickle.dump(kmeans, open("save_tl.pkl", "wb"))
     topics_data['cat'] = pd.Series(y_pred_kmeans.astype(int), index=topics_data.index)
-    print(topics_data)
     topics_data.to_csv('reddit_img_labeled_tl.csv')
-
